@@ -28,17 +28,23 @@ public class GameListService {
 	
 	@Transactional
 	public void move(Long listId, int sourceIndex, int destinationIndex) {
+
 		List<GameMinProjection> list = gameRepository.searchByList(listId);
-		
-		// nesse ponto irá ocorrer a remoção do objeto em uma posição e ira adicionar em outra
-		GameMinProjection obj = list.remove(destinationIndex);
+
+		GameMinProjection obj = list.remove(sourceIndex);
 		list.add(destinationIndex, obj);
-		
+
 		int min = sourceIndex < destinationIndex ? sourceIndex : destinationIndex;
 		int max = sourceIndex < destinationIndex ? destinationIndex : sourceIndex;
-		
-		for(int i = min; i <= max; i++) {
+
+		for (int i = min; i <= max; i++) {
 			gameListRepository.updateBelongingPosition(listId, list.get(i).getId(), i);
 		}
+	}
+
+	@Transactional(readOnly = true)
+	public GameListDTO findById(Long id) {
+		GameList entity = gameListRepository.findById(id).get();
+		return new GameListDTO(entity);
 	}
 }

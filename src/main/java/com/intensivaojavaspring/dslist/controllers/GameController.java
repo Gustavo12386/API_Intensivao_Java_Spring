@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.intensivaojavaspring.dslist.dto.GameDTO;
 import com.intensivaojavaspring.dslist.dto.GameMinDTO;
-import com.intensivaojavaspring.dslist.entities.Game;
 import com.intensivaojavaspring.dslist.services.GameService;
 
 @RestController
@@ -31,5 +30,7 @@ public class GameController {
 	   List<GameMinDTO> result = gameService.findAll();
 	   return result;
    }
+   
+   
    
 }
